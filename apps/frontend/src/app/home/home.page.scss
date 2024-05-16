@@ -30,8 +30,29 @@
   text-decoration: none;
 }
 
-.play_focus_button_input{
+.play_focus_button_input {
   border: 3px solid grey;
   border-radius: 15px;
   width: 35%;
+}
+
+// .content {
+//   width: 50%;
+// }
+
+.list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  // background-color: black;
+
+  .item {
+    // width: 50%;
+    width: 100%;
+    margin-bottom: 10px;
+    // border: 1px solid yellowgreen;
+    // background-color: black;
+    // border-bottom: 5px solid yellowgreen;
+  }
 }
