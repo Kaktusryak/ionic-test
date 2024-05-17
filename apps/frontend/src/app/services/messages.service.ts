@@ -1,10 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
-import { addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { addDoc, deleteDoc, doc, orderBy, query } from 'firebase/firestore';
 
 import { MessageInterface } from '../models/message.model';
-
 
 @Injectable({
   providedIn: 'root',
@@ -13,8 +12,10 @@ export class MessagesService {
   firestore = inject(Firestore);
   messagesCollection = collection(this.firestore, 'messages');
 
+
   getMessages(): Observable<MessageInterface[]> {
-    return collectionData(this.messagesCollection, {
+    const messagesQuery = query(this.messagesCollection, orderBy('date', 'desc'));
+    return collectionData(messagesQuery, {
       idField: 'id',
     }) as Observable<MessageInterface[]>;
   }
@@ -23,12 +24,12 @@ export class MessagesService {
     const promise = addDoc(this.messagesCollection, message).then(
       (response) => response.id
     );
-    return from(promise)
+    return from(promise);
   }
 
-  removeMessage(messageId:string):Observable<void>{
-    const docRef = doc(this.firestore, 'messages/'+messageId)
-    const promise = deleteDoc(docRef)
-    return from(promise)
+  removeMessage(messageId: string): Observable<void> {
+    const docRef = doc(this.firestore, 'messages/' + messageId);
+    const promise = deleteDoc(docRef);
+    return from(promise);
   }
 }
