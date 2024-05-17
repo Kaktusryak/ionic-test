@@ -1,5 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
-import { IonInput } from '@ionic/angular';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'organization-home',
@@ -7,6 +7,5 @@ import { IonInput } from '@ionic/angular';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage {
-  constructor() {}
 
 }
