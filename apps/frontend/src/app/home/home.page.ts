@@ -1,7 +1,5 @@
-import { Component, OnInit, inject } from '@angular/core';
-import { InfiniteScrollCustomEvent } from '@ionic/angular';
-import { LoadingController } from '@ionic/angular';
-import { catchError, finalize } from 'rxjs';
+import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'organization-home',

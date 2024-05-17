@@ -1,8 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { MessagesService } from './services/messages.service';
 import { Store } from '@ngrx/store';
-import { restoreMessages } from './state/actions/messages.actions';
 import { MenuController } from '@ionic/angular' 
+
+import { MessagesService } from './services/messages.service';
+import { restoreMessages } from './state/actions/messages.actions';
+
 
 @Component({
   selector: 'organization-root',

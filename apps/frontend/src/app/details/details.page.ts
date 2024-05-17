@@ -1,17 +1,12 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Input, WritableSignal, inject, signal } from '@angular/core';
-import { LoadingController, MenuController, ToastController } from '@ionic/angular';
-
+import { Component, ViewChild } from '@angular/core';
+import { inject } from '@angular/core';
+import { LoadingController, ToastController } from '@ionic/angular';
 import { IonModal } from '@ionic/angular';
-import {
-  FormBuilder,
-  FormControl,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { MessagesService } from '../services/messages.service';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
-import { addMessage, restoreMessages } from '../state/actions/messages.actions';
+
+import { MessagesService } from '../services/messages.service';
+import { addMessage } from '../state/actions/messages.actions';
 import { MessageInterface } from '../models/message.model';
 import { selectAllMessages } from '../state/selectors/messages.selectors';
 
@@ -25,8 +20,8 @@ export class DetailsPage {
   fb = inject(FormBuilder);
   messagesService = inject(MessagesService);
   store = inject(Store);
-  loadiongCtrl = inject(LoadingController)
-  toastCtrl = inject(ToastController)
+  loadiongCtrl = inject(LoadingController);
+  toastCtrl = inject(ToastController);
 
   messageForm = this.fb.group({
     name: ['', Validators.required],
@@ -38,7 +33,6 @@ export class DetailsPage {
   ngOnInit() {
     this.store.pipe(select(selectAllMessages)).subscribe((messages) => {
       this.messages = messages;
-      console.log(messages);
     });
   }
 
@@ -48,32 +42,31 @@ export class DetailsPage {
 
   async onSubmit() {
     const loading = await this.loadiongCtrl.create({
-      message:'Creating...',
-      spinner:'lines'
-    })
+      message: 'Creating...',
+      spinner: 'lines',
+    });
     const toast = await this.toastCtrl.create({
       message: 'Success!',
       duration: 1500,
       position: 'bottom',
     });
     if (!this.messageForm.invalid) {
-      await loading.present()
-      const newMessage={
+      await loading.present();
+      const newMessage = {
         name: this.messageForm.getRawValue().name || '',
-            text: this.messageForm.getRawValue().text || '',
-            id: '',
-            date: new Date().toISOString().substring(0,10)
-      }
-      this.store.dispatch(addMessage({message:newMessage}))
-      this.messageForm.reset()
-      this.modal.dismiss(null, 'submit')
-      await loading.dismiss()
-      await toast.present()
+        text: this.messageForm.getRawValue().text || '',
+        id: '',
+        date: new Date().toISOString().substring(0, 10),
+      };
+      this.store.dispatch(addMessage({ message: newMessage }));
+      this.messageForm.reset();
+      this.modal.dismiss(null, 'submit');
+      await loading.dismiss();
+      await toast.present();
     }
   }
 
-  onDelete(messageId:string){
-    console.log(messageId)
-    this.messagesService.removeMessage(messageId)
+  onDelete(messageId: string) {
+    this.messagesService.removeMessage(messageId);
   }
 }

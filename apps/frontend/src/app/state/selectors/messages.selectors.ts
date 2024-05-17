@@ -1,6 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { MessageInterface } from '../../models/message.model';
+
 import { StateInterface } from '../reducers/messages.reducer';
+
 
 export const selectFeature = createFeatureSelector<StateInterface>('messages');
 

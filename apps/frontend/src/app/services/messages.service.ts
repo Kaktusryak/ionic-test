@@ -1,8 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, collectionData } from '@angular/fire/firestore';
 import { Observable, from } from 'rxjs';
-import { MessageInterface } from '../models/message.model';
 import { addDoc, deleteDoc, doc } from 'firebase/firestore';
+
+import { MessageInterface } from '../models/message.model';
+
 
 @Injectable({
   providedIn: 'root',
