@@ -8,7 +8,7 @@ export const routes: Routes = [
           import('./home/home.module').then((m) => m.HomePageModule),
       },
       {
-        path: 'details',
+        path: 'messages',
         loadChildren: () =>
           import('./details/details.module').then((m) => m.DetailsPageModule),
       },
@@ -18,7 +18,7 @@ export const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'details/:id', // <-- Add the :id parameter
+        path: 'messages/:id', // <-- Add the :id parameter
         loadChildren: () => import('./details/details.module').then((m) => m.DetailsPageModule),
       },
   

@@ -32,23 +32,7 @@ import { TestComponent } from 'libs/library/src/lib/test/test.component';
     CommonModule,
     FormsModule,
     HomePageRoutingModule,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    IonBadge,
-    IonLabel,
-    IonAvatar,
-    IonItem,
-    IonList,
-    IonLoading,
-    IonInfiniteScroll,
-    IonInfiniteScrollContent,
-    IonSkeletonText,
-    IonAlert,
-    IonFooter,
-    TestModule
-  
+    IonicModule
   ],
   declarations: [HomePage],
 })
