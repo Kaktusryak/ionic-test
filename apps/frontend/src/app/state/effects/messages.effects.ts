@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import * as MessagesActions from '../actions/messages.actions';
 import { MessagesService } from '../../services/messages.service';
 
-
 @Injectable()
 export class MessagesEffects {
   constructor(
