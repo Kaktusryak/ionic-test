@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, mergeMap, tap } from 'rxjs/operators';
+import { catchError, map, mergeMap, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as MessagesActions from '../actions/messages.actions';
 import { MessagesService } from '../../services/messages.service';
-
 
 @Injectable()
 export class MessagesEffects {
@@ -29,18 +28,17 @@ export class MessagesEffects {
     )
   );
 
-  addMessageSuccess$ = createEffect(
-    () =>
-      this.actions$.pipe(
-        ofType(MessagesActions.addMessageSuccess),
-        tap(() => {
-          this.messagesService.getMessages().subscribe((messages) => {
-            this.store.dispatch(
-              MessagesActions.restoreMessages({ messages: messages })
-            );
-          });
-        })
-      ),
-    { dispatch: false }
+  addMessageSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(MessagesActions.addMessageSuccess),
+      switchMap(() =>
+        this.messagesService.getMessages().pipe(
+          map((messages) =>
+            MessagesActions.restoreMessages({ messages: messages })
+          ),
+          catchError(() => of(MessagesActions.addMessageFailure()))
+        )
+      )
+    )
   );
 }

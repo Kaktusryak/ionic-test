@@ -4,11 +4,13 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import { IonModal } from '@ionic/angular';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Store, select } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 
 import { MessagesService } from '../services/messages.service';
 import { addMessage } from '../state/actions/messages.actions';
 import { MessageInterface } from '../models/message.model';
 import { selectAllMessages } from '../state/selectors/messages.selectors';
+
 
 @Component({
   selector: 'organization-details',
@@ -27,13 +29,29 @@ export class DetailsPage {
     name: ['', Validators.required],
     text: ['', Validators.required],
   });
+  
+  isLoading : boolean = true
+
+  subscription!: Subscription 
 
   messages: MessageInterface[] = [];
 
-  ngOnInit() {
-    this.store.pipe(select(selectAllMessages)).subscribe((messages) => {
+  async ngOnInit() {
+    const loading = await this.loadiongCtrl.create({
+      message: 'Loading...',
+      spinner: 'lines',
+    });
+    await loading.present();
+    this.subscription=this.store.pipe(select(selectAllMessages)).subscribe((messages) => {
       this.messages = messages;
     });
+    await loading.dismiss();
+    this.isLoading = false
+
+  }
+
+  ngOnDestroy(){
+    this.subscription.unsubscribe()
   }
 
   cancel() {
@@ -56,7 +74,7 @@ export class DetailsPage {
         name: this.messageForm.getRawValue().name || '',
         text: this.messageForm.getRawValue().text || '',
         id: '',
-        date: new Date().toISOString().substring(0, 10),
+        date: Date.now(),
       };
       this.store.dispatch(addMessage({ message: newMessage }));
       this.messageForm.reset();

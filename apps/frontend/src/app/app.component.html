@@ -2,10 +2,10 @@
   <ion-menu contentId="main-content">
     <ion-header>
       <ion-toolbar>
-        <ion-title>Menu Content</ion-title>
+        <ion-title>{{menuTitle}}</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content class="ion-padding">This is the menu content.
+    <ion-content class="ion-padding">
       <ion-item (click)="onMenuClose()" button routerLink="home">Home</ion-item>
       <ion-item (click)="onMenuClose()" button routerLink="messages">Messages</ion-item>
     </ion-content>
